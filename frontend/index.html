@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DSSRES Solar Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>DSSRES Solar Dashboard</h1>
+      <p>AI-optimized scheduling with doped ZnO/TiO<sub>2</sub> DSSC electron transport layers</p>
+    </div>
+    <div class="controls">
+      <label>Dopant
+        <select id="dopant"></select>
+      </label>
+      <label>Panel area (m²)
+        <input id="area" type="number" min="1" step="1" value="120" />
+      </label>
+      <label>Latitude
+        <input id="lat" type="number" min="-90" max="90" step="0.01" value="22.0" />
+      </label>
+      <label>Longitude
+        <input id="lon" type="number" min="-180" max="180" step="0.01" value="78.0" />
+      </label>
+      <label class="check"><input id="live" type="checkbox" checked /> NASA POWER live</label>
+      <button id="run">Train Model &amp; Run Simulation</button>
+    </div>
+  </header>
+
+  <div id="status" class="status" role="status">Loading materials…</div>
+
+  <main class="grid">
+    <section class="card">
+      <h2>DSSC Material Metrics</h2>
+      <p id="mat-name" class="muted">—</p>
+      <div class="metrics">
+        <div><span id="m-voc">—</span><small>Voc (V)</small></div>
+        <div><span id="m-jsc">—</span><small>Jsc (mA/cm²)</small></div>
+        <div><span id="m-ff">—</span><small>Fill Factor</small></div>
+        <div><span id="m-eta">—</span><small>Lab Efficiency (%)</small></div>
+      </div>
+      <p id="m-gain" class="muted"></p>
+    </section>
+
+    <section class="card">
+      <h2>I-V Curve: Selected vs Undoped Control</h2>
+      <div class="chart-box"><canvas id="ivChart"></canvas></div>
+    </section>
+
+    <section class="card wide">
+      <h2>24-Hour Solar Generation vs. Load Schedule <span id="sim-date" class="muted"></span></h2>
+      <div class="chart-box tall"><canvas id="genChart"></canvas></div>
+    </section>
+
+    <section class="card">
+      <h2>Energy Savings &amp; Grid Reduction</h2>
+      <div class="metrics">
+        <div><span id="s-gen">—</span><small>Total generated (kWh)</small></div>
+        <div><span id="s-saved">—</span><small>Grid energy saved (%)</small></div>
+        <div><span id="s-co2">—</span><small>CO₂ avoided (kg)</small></div>
+        <div><span id="s-grid">—</span><small>Grid import (kWh)</small></div>
+      </div>
+      <p id="s-note" class="muted"></p>
+    </section>
+
+    <section class="card">
+      <h2>Random Forest Forecast Quality</h2>
+      <div class="metrics">
+        <div><span id="q-rmse">—</span><small>RMSE (W/m²)</small></div>
+        <div><span id="q-mae">—</span><small>MAE (W/m²)</small></div>
+        <div><span id="q-r2">—</span><small>R²</small></div>
+        <div><span id="q-src">—</span><small>Data source</small></div>
+      </div>
+      <p id="q-note" class="muted"></p>
+    </section>
+  </main>
+</body>
+<script src="app.js"></script>
+</html>
